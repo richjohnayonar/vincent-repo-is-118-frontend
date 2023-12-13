@@ -4,12 +4,13 @@ import Navbar from "./components/Navbar";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/publicUser/Home";
 import StudentSched from "./pages/publicUser/studentSchedule";
-import Admin from "./pages/instructor/admin";
+import AssignedSubject from "./pages/instructor/assignedSubject";
 import InstructorSchedule from "./pages/instructor/instructorSchedule";
 import UsersAccount from "./pages/Editor/UsersAccount";
 import CreateUsersAccount from "./pages/Editor/createAccount";
 import UpdateUser from "./pages/Editor/updateUser";
 import Subject from "./pages/instructor/subjects";
+import SubjectDetail from "./pages/instructor/subjectDetail";
 
 function Main({ handleLogout, userRole, userId }) {
   return (
@@ -31,12 +32,19 @@ function Main({ handleLogout, userRole, userId }) {
         )}
         {userRole === "admin" ? (
           <>
-            <Route path="/admin" element={<Admin />} />
+            <Route
+              path="/assigned-subject"
+              element={<AssignedSubject userId={userId} />}
+            />
             <Route
               path="/instructor-schedule"
               element={<InstructorSchedule userId={userId} />}
             />
             <Route path={`/subject/${userId}`} element={<Subject />} />
+            <Route
+              path="/subject-detail/:id"
+              element={<SubjectDetail userId={userId} />}
+            />
           </>
         ) : null}
         {userRole === "editor" ? (

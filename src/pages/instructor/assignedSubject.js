@@ -2,29 +2,29 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
 import "../Editor/Editor.css";
+import { Link } from "react-router-dom";
 
-function InstructorSchedule({ userId }) {
-  const [schedule, setSchedule] = useState([]);
+function AssignedSubject({ userId }) {
+  const [subject, setSubject] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(true);
   const [maxLength, setMaxLength] = useState(200); // Default maxLength
 
   useEffect(() => {
-    const getSchedule = async () => {
+    const getSubject = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/schedule/${userId}`
+          `http://localhost:8000/api/subject/${userId}`
         );
-        setSchedule(Array.isArray(response.data) ? response.data : []);
+        setSubject(Array.isArray(response.data) ? response.data : []);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching schedule:", error);
         setLoading(false);
-        setSchedule([]);
+        setSubject([]);
       }
     };
-
-    getSchedule();
+    getSubject();
   }, [userId]);
 
   useEffect(() => {
@@ -53,30 +53,16 @@ function InstructorSchedule({ userId }) {
   // Define columns for the DataTable
   const columns = [
     {
-      name: "TIME",
-      selector: "time",
-      sortable: true,
-    },
-    {
-      name: "DAY",
-      selector: "day",
-      sortable: true,
-    },
-    {
       name: "SUBJECT ID",
-      selector: "subjectInfo.subjectId",
+      selector: "subjectId",
       sortable: true,
     },
     {
       name: "SUBJECT DESCRIPTION",
-      selector: "subjectInfo.subjectDescription",
+      selector: "subjectDescription",
       cell: (row) => (
-        <span
-          title={row.subjectInfo?.subjectDescription} // Optional chaining to handle potential undefined
-          className="subject-description-cell"
-        >
-          {truncateDescription(row.subjectInfo?.subjectDescription)}{" "}
-          {/* Optional chaining */}
+        <span title={row.subjectDescription}>
+          {truncateDescription(row.subjectDescription)}
         </span>
       ),
       style: {
@@ -85,6 +71,21 @@ function InstructorSchedule({ userId }) {
       headerStyle: {
         textAlign: "left",
       },
+    },
+    {
+      name: "COURSE",
+      selector: "courseInfo.courseAv",
+      sortable: true,
+    },
+    {
+      name: "More Details",
+      cell: (row) => (
+        <div>
+          <Link to={`/subject-detail/${row._id}`}>
+            <h3 className="view-more">View more details</h3>
+          </Link>
+        </div>
+      ),
     },
   ];
 
@@ -116,15 +117,15 @@ function InstructorSchedule({ userId }) {
         <DataTable
           columns={columns}
           data={
-            Array.isArray(schedule)
-              ? schedule.filter((item) => {
+            Array.isArray(subject)
+              ? subject.filter((item) => {
                   const subjectIdMatch = item.subjectInfo?.subjectId
                     ?.toLowerCase()
                     .includes(searchText.toLowerCase());
-                  const dayMatch = item.day
+                  const course = item.courseInfo.courseAv
                     ?.toLowerCase()
                     .includes(searchText.toLowerCase());
-                  return subjectIdMatch || dayMatch;
+                  return subjectIdMatch || course;
                 })
               : []
           }
@@ -136,4 +137,4 @@ function InstructorSchedule({ userId }) {
   );
 }
 
-export default InstructorSchedule;
+export default AssignedSubject;

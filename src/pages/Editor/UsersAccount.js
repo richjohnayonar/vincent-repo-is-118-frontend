@@ -3,7 +3,7 @@ import axios from "axios";
 import DataTable from "react-data-table-component";
 import "./Editor.css";
 import * as FaIcons from "react-icons/fa";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function UsersAccount() {
   const [user, setUser] = useState([]);
