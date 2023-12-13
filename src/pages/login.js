@@ -28,9 +28,11 @@ export default function Login({ handleLogin, isAuthenticated }) {
 
     axios(configuration)
       .then((result) => {
+        console.log(result.data);
         const userRole = result.data.role;
-        handleLogin(userRole);
-        navigate("/user");
+        const userId = result.data.id;
+        handleLogin(userRole, userId);
+        navigate("/home");
       })
       .catch((error) => {
         setError("Invalid Email or password.");

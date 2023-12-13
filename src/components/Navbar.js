@@ -1,4 +1,3 @@
-// Navbar.js
 import React, { useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
@@ -13,27 +12,20 @@ function Navbar({ handleLogout, userRole }) {
   const showSidebar = () => setSidebar(!sidebar);
 
   const handleLogoutClick = () => {
-    handleLogout(); // Update authentication status to false
-    navigate("/login"); // Redirect to login page
+    handleLogout();
+    navigate("/login");
   };
 
   const getLinksBasedOnRole = () => {
-    if (userRole === "user") {
-      return SidebarData.filter((item) => item.role === "user");
-    } else if (userRole === "admin") {
-      return SidebarData.filter(
-        (item) => item.role === "admin" || item.role === "user"
-      );
-    } else if (userRole === "editor") {
-      return SidebarData.filter(
-        (item) =>
-          item.role === "editor" ||
-          item.role === "admin" ||
-          item.role === "user"
-      );
-    }
-    return [];
+    return SidebarData.filter((item) => {
+      if (Array.isArray(item.role)) {
+        return item.role.includes(userRole);
+      } else {
+        return item.role === userRole;
+      }
+    });
   };
+
   const navLinks = getLinksBasedOnRole();
 
   return (
@@ -55,14 +47,14 @@ function Navbar({ handleLogout, userRole }) {
               <li key={index} className={item.cName}>
                 <Link to={item.path}>
                   {item.icon}
-                  <span>{item.title}</span>
+                  <span className="nav-span">{item.title}</span>
                 </Link>
               </li>
             ))}
             <li className="nav-text logout">
               <Link to="#" onClick={handleLogoutClick}>
                 <FaIcons.FaSignOutAlt />
-                <span>Sign Out</span>
+                <span className="nav-span">Sign Out</span>
               </Link>
             </li>
           </ul>

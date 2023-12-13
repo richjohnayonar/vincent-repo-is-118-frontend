@@ -17,11 +17,15 @@ function App() {
     localStorage.getItem("userRole") || ""
   );
 
-  const handleLogin = (role) => {
+  const [userId, setUserId] = useState(localStorage.getItem("userId") || "");
+
+  const handleLogin = (role, id) => {
     setIsAuthenticated(true);
     setUserRole(role);
+    setUserId(id);
     localStorage.setItem("isAuthenticated", "true");
     localStorage.setItem("userRole", role);
+    localStorage.setItem("userId", id);
   };
 
   const handleLogout = () => {
@@ -29,6 +33,7 @@ function App() {
     setUserRole("");
     localStorage.removeItem("isAuthenticated");
     localStorage.removeItem("userRole");
+    localStorage.removeItem("userId");
   };
 
   return (
@@ -48,7 +53,11 @@ function App() {
             path="/*"
             element={
               isAuthenticated ? (
-                <Main handleLogout={handleLogout} userRole={userRole} /> // Pass userRole
+                <Main
+                  handleLogout={handleLogout}
+                  userRole={userRole}
+                  userId={userId}
+                /> // Pass userRole
               ) : (
                 <Navigate to="/login" />
               )

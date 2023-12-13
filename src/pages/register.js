@@ -7,6 +7,7 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
+  const [id, setId] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -45,6 +46,7 @@ export default function Register() {
         email,
         password,
         role,
+        id,
       },
     };
 
@@ -103,6 +105,17 @@ export default function Register() {
               value={role}
               onChange={(e) => setRole(e.target.value)}
               placeholder="role"
+              style={{ marginBottom: "8px" }}
+            />
+          </Form.Group>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Student ID</Form.Label>
+            <Form.Control
+              type="text"
+              name="ID"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+              placeholder="Student ID"
               style={{ marginBottom: "8px" }}
             />
           </Form.Group>

@@ -2,15 +2,16 @@
 import React from "react";
 import Navbar from "./components/Navbar";
 import { Routes, Route } from "react-router-dom";
-import User from "./pages/user/user";
-import OtherUserPage from "./pages/user/otherUserPage";
+import Home from "./pages/publicUser/Home";
+import StudentSched from "./pages/publicUser/studentSchedule";
 import Admin from "./pages/instructor/admin";
-import OtherAdminPage from "./pages/instructor/otherAdminPage";
+import InstructorSchedule from "./pages/instructor/instructorSchedule";
 import UsersAccount from "./pages/Editor/UsersAccount";
 import CreateUsersAccount from "./pages/Editor/createAccount";
 import UpdateUser from "./pages/Editor/updateUser";
+import Subject from "./pages/instructor/subjects";
 
-function Main({ handleLogout, userRole }) {
+function Main({ handleLogout, userRole, userId }) {
   return (
     <>
       <Navbar handleLogout={handleLogout} userRole={userRole} />
@@ -20,14 +21,22 @@ function Main({ handleLogout, userRole }) {
         userRole === "admin" ||
         userRole === "editor" ? (
           <>
-            <Route path="/user" element={<User />} />
-            <Route path="/other-user-page" element={<OtherUserPage />} />
+            <Route path={"/home"} element={<Home userId={userId} />} />
           </>
         ) : null}
-        {userRole === "admin" || userRole === "editor" ? (
+        {userRole === "user" && (
+          <>
+            <Route path="/schedule" element={<StudentSched />} />
+          </>
+        )}
+        {userRole === "admin" ? (
           <>
             <Route path="/admin" element={<Admin />} />
-            <Route path="/other-admin-page" element={<OtherAdminPage />} />
+            <Route
+              path="/instructor-schedule"
+              element={<InstructorSchedule userId={userId} />}
+            />
+            <Route path={`/subject/${userId}`} element={<Subject />} />
           </>
         ) : null}
         {userRole === "editor" ? (

@@ -1,18 +1,17 @@
-// SidebarData.js
 import React from "react";
 import * as FaIcons from "react-icons/fa";
 
 export const SidebarData = [
   {
-    title: "User",
-    path: "/user",
-    icon: <FaIcons.FaUser />,
+    title: "Home",
+    path: "/home",
+    icon: <FaIcons.FaHome />,
     cName: "nav-text",
-    role: "user",
+    role: ["user", "admin", "editor"],
   },
   {
-    title: "Other User Page",
-    path: "/other-user-page",
+    title: "Schedule",
+    path: "/schedule",
     icon: <FaIcons.FaUserAlt />,
     cName: "nav-text",
     role: "user",
@@ -25,11 +24,11 @@ export const SidebarData = [
     role: "admin",
   },
   {
-    title: "Other Admin Page",
-    path: "/other-admin-page",
+    title: "Schedule",
+    path: "/instructor-schedule",
     icon: <FaIcons.FaUserLock />,
     cName: "nav-text",
-    role: "admin",
+    role: ["admin"],
   },
   {
     title: "Users Account",

@@ -8,6 +8,7 @@ function CreateAccount() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user"); // Default role
+  const [id, setId] = useState("");
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [isloading, setIsLoading] = useState(null);
@@ -17,8 +18,8 @@ function CreateAccount() {
     event.preventDefault();
     try {
       // Handle form submission logic here
-      if (!email && !password) {
-        setError("Email and password are required.");
+      if (!email && !password && !id) {
+        setError("Please enter all required information.");
         return;
       }
       setIsLoading(true);
@@ -26,11 +27,20 @@ function CreateAccount() {
         email: email,
         password: password,
         role: role,
+        id,
       });
       setIsLoading(false);
       navigate("/users-account");
     } catch (error) {
-      console.error("Error creating user: ", error);
+      if (
+        error.response &&
+        error.response.status === 400 &&
+        error.response.data.message === "Email already in use."
+      ) {
+        setError("Email already in use. Please use different email.");
+      } else {
+        setError("Registration failed. Please try again.");
+      }
       setIsLoading(false);
     }
     // Fetch updated user data after submission
@@ -75,6 +85,19 @@ function CreateAccount() {
             <option value="admin">Admin</option>
             <option value="editor">Editor</option>
           </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">
+            Student ID generated in database( _id )
+          </label>
+          <input
+            type="text"
+            id="id"
+            name="id"
+            placeholder="Enter your Student id"
+            value={id}
+            onChange={(e) => setId(e.target.value)}
+          />
         </div>
         {!isloading && (
           <button className="create-account-sb-button" type="submit">

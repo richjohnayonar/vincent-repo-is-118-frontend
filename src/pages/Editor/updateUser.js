@@ -12,40 +12,61 @@ function UpdateUser() {
     email: "",
     password: "",
     role: "",
+    id: "",
   });
-
-  const getUser = async () => {
-    setIsLoading(true);
-    try {
-      const response = await axios.get(`http://localhost:8000/api/user/${id}`);
-      setUser({
-        email: response.data.email,
-        password: response.data.password,
-        role: response.data.role,
-      });
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-      setIsLoading(false);
-      setError("Error retrieving user data");
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await axios.put(`http://localhost:8000/api/userUpdate/${id}`, user);
+      // Check if the password is empty (indicating it hasn't been changed)
+      if (!user.password.trim()) {
+        // If the password is not provided, remove it from the user object
+        const { password, ...updatedUser } = user;
+        await axios.put(
+          `http://localhost:8000/api/userUpdate/${id}`,
+          updatedUser
+        );
+      } else {
+        // If a new password is provided, proceed with the full user object
+        await axios.put(`http://localhost:8000/api/userUpdate/${id}`, user);
+      }
       setIsLoading(false);
       navigate("/users-account");
     } catch (error) {
-      console.error("Error updating user: ", error);
+      if (
+        error.response &&
+        error.response.status === 400 &&
+        error.response.data.message === "Email already in use."
+      ) {
+        setError("Email already in use. Please use a different email.");
+      } else {
+        setError("Error updating user");
+      }
       setIsLoading(false);
-      setError("Error updating user");
     }
   };
 
   useEffect(() => {
+    const getUser = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/api/user/${id}`
+        );
+        setUser({
+          email: response.data.email,
+          password: response.data.password,
+          role: response.data.role,
+          id: response.data.id,
+        });
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+        setError("Error retrieving user data");
+      }
+    };
     getUser();
   }, [id]);
 
@@ -61,7 +82,9 @@ function UpdateUser() {
             id="email"
             name="email"
             value={user.email}
-            onChange={(e) => setUser({ ...user, email: e.target.value })}
+            onChange={(e) =>
+              setUser((prevUser) => ({ ...prevUser, email: e.target.value }))
+            }
           />
         </div>
         <div className="form-group">
@@ -71,7 +94,9 @@ function UpdateUser() {
             id="password"
             name="password"
             value={user.password}
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
+            onChange={(e) =>
+              setUser((prevUser) => ({ ...prevUser, password: e.target.value }))
+            }
           />
         </div>
         <div className="form-group">
@@ -86,6 +111,18 @@ function UpdateUser() {
             <option value="admin">Admin</option>
             <option value="editor">Editor</option>
           </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Student ID</label>
+          <input
+            type="text"
+            id="id"
+            name="id"
+            value={user.id}
+            onChange={(e) =>
+              setUser((prevUser) => ({ ...prevUser, id: e.target.value }))
+            }
+          />
         </div>
         {!isLoading && (
           <button className="create-account-sb-button" type="submit">
