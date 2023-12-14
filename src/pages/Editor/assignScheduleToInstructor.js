@@ -42,9 +42,14 @@ function AssignInstructorSchedule() {
   return (
     <div>
       <div
-        style={{ background: "white", marginTop: "20px", marginBottom: "20px" }}
+        style={{
+          background: "white",
+          padding: "20px",
+          marginTop: "20px",
+          marginBottom: "20px",
+        }}
       >
-        <p style={{ padding: "20px" }}>
+        <p style={{ textAlign: "left", marginTop: "30px", marginLeft: "20px" }}>
           <button className="assignInstructorButton" onClick={scrollToForm}>
             Assign Instructor Schedule
             <FaIcons.FaPlus style={{ marginLeft: "8px" }} />

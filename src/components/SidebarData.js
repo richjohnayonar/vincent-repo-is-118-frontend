@@ -58,4 +58,18 @@ export const SidebarData = [
     cName: "nav-text",
     role: "editor",
   },
+  {
+    title: "Billing",
+    path: "/billing",
+    icon: <FaIcons.FaDollarSign />,
+    cName: "nav-text",
+    role: "editor",
+  },
+  {
+    title: "Payment Status",
+    path: "/payment-status",
+    icon: <FaIcons.FaMoneyCheckAlt />,
+    cName: "nav-text",
+    role: "editor",
+  },
 ];

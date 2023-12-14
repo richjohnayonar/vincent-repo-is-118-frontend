@@ -14,6 +14,9 @@ import AssignInstructor from "./pages/Editor/AssignInstructor";
 import Footer from "./components/footer";
 import EnrollStudent from "./pages/instructor/enrollStudent";
 import AssignScheduleToInstructor from "./pages/Editor/assignScheduleToInstructor";
+import Billing from "./pages/Editor/Billing";
+import PaymentStatus from "./pages/Editor/PaymentStatus";
+import UpdatePayment from "./pages/Editor/updatePayment";
 
 function Main({ handleLogout, userRole, userId }) {
   return (
@@ -66,7 +69,9 @@ function Main({ handleLogout, userRole, userId }) {
               path="/assign-instructor-schedule"
               element={<AssignScheduleToInstructor />}
             />
-            {/*<Route path="/other-user-page" element={<OtherUserPage />}/> */}
+            <Route path="/billing" element={<Billing />} />
+            <Route path="/payment-status" element={<PaymentStatus />} />
+            <Route path="/update-payment/:id" element={<UpdatePayment />} />
           </>
         ) : null}
       </Routes>
