@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Alert } from "react-bootstrap";
 import Student from "../../components/student";
+import * as FaIcons from "react-icons/fa";
 
 function CreateAccount() {
   // State to manage form fields
@@ -47,14 +48,27 @@ function CreateAccount() {
     // Fetch updated user data after submission
   };
 
+  const formRef = useRef(null);
+  // Function to scroll to the form section
+  const scrollToForm = () => {
+    formRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <>
       <div
         style={{
           background: "white",
           paddingTop: "50px",
+          marginTop: "20px",
         }}
       >
+        <p style={{ padding: "20px" }}>
+          <button className="assignInstructorButton" onClick={scrollToForm}>
+            Create users account
+            <FaIcons.FaPlus style={{ marginLeft: "8px" }} />
+          </button>
+        </p>
         {!isloading && <Student />}
       </div>
 
@@ -65,7 +79,7 @@ function CreateAccount() {
           paddingTop: "20px",
         }}
       >
-        <div className="form-container">
+        <div ref={formRef} className="form-container">
           <h2>CREATE STUDENT ACCOUNT</h2>
           <form onSubmit={handleSubmit}>
             {error && <Alert variant="danger">{error}</Alert>}

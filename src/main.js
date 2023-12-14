@@ -9,11 +9,11 @@ import InstructorSchedule from "./pages/instructor/instructorSchedule";
 import UsersAccount from "./pages/Editor/UsersAccount";
 import CreateUsersAccount from "./pages/Editor/createAccount";
 import UpdateUser from "./pages/Editor/updateUser";
-import Subject from "./pages/instructor/subjects";
 import SubjectDetail from "./pages/instructor/subjectDetail";
 import AssignInstructor from "./pages/Editor/AssignInstructor";
 import Footer from "./components/footer";
 import EnrollStudent from "./pages/instructor/enrollStudent";
+import AssignScheduleToInstructor from "./pages/Editor/assignScheduleToInstructor";
 
 function Main({ handleLogout, userRole, userId }) {
   return (
@@ -43,7 +43,6 @@ function Main({ handleLogout, userRole, userId }) {
               path="/instructor-schedule"
               element={<InstructorSchedule userId={userId} />}
             />
-            <Route path={`/subject/${userId}`} element={<Subject />} />
             <Route
               path="/subject-detail/:id"
               element={<SubjectDetail userId={userId} />}
@@ -63,6 +62,10 @@ function Main({ handleLogout, userRole, userId }) {
               element={<CreateUsersAccount />}
             />
             <Route path="/assign-instructor" element={<AssignInstructor />} />
+            <Route
+              path="/assign-instructor-schedule"
+              element={<AssignScheduleToInstructor />}
+            />
             {/*<Route path="/other-user-page" element={<OtherUserPage />}/> */}
           </>
         ) : null}

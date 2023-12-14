@@ -107,7 +107,7 @@ function AssignedSubject({ userId }) {
             <input
               className="search-bar"
               type="text"
-              placeholder="Search by Subject ID or Day"
+              placeholder="Search by Subject ID"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />

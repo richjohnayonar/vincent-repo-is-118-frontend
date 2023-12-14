@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { Alert } from "react-bootstrap";
 import Course from "../../components/course";
 import Instructor from "../../components/Instructor";
@@ -12,7 +11,6 @@ function AssignInstructor() {
   const [subDescription, setSubdescription] = useState("");
   const [course, setCourse] = useState("");
   const [instructor, setInstructor] = useState("");
-  const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [isloading, setIsLoading] = useState(null);
 
@@ -31,7 +29,7 @@ function AssignInstructor() {
         instructor: instructor,
       });
       setIsLoading(false);
-      navigate("/users-account");
+      window.location.reload(); // Reload the page after successful deletion
     } catch (error) {
       console.log(error);
       setError("Error please try again.");
@@ -46,9 +44,13 @@ function AssignInstructor() {
 
   return (
     <div>
-      <div style={{ background: "white", marginBottom: "20px" }}></div>
       <div
-        style={{ background: "white", padding: "20px", marginBottom: "20px" }}
+        style={{
+          background: "white",
+          padding: "20px",
+          marginTop: "20px",
+          marginBottom: "20px",
+        }}
       >
         <p style={{ textAlign: "left", marginTop: "30px", marginLeft: "20px" }}>
           <button className="assignInstructorButton" onClick={scrollToForm}>
@@ -56,7 +58,7 @@ function AssignInstructor() {
             <FaIcons.FaPlus style={{ marginLeft: "8px" }} />
           </button>
         </p>
-        <h2 style={{ marginTop: "50px" }}>INSTRUCTOR</h2>
+        <h2 style={{ marginTop: "10px" }}>INSTRUCTOR</h2>
         <Instructor />
       </div>
       <div
@@ -122,7 +124,7 @@ function AssignInstructor() {
             </div>
             {!isloading && (
               <button className="create-account-sb-button" type="submit">
-                Create Account
+                Confirm
               </button>
             )}
           </form>

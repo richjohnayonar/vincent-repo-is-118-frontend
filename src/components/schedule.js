@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
 
-function Student() {
-  const [student, setStudent] = useState([]);
+function Course({ userId }) {
+  const [schedule, setSchedule] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(true);
   const [maxLength, setMaxLength] = useState(200); // Default maxLength
@@ -11,17 +11,19 @@ function Student() {
   useEffect(() => {
     const getCourse = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/student");
-        setStudent(response.data);
+        const response = await axios.get(
+          `http://localhost:8000/api/schedule/${userId}`
+        );
+        setSchedule(response.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching schedule:", error);
         setLoading(false);
-        setStudent([]);
+        setSchedule([]);
       }
     };
     getCourse();
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -49,28 +51,24 @@ function Student() {
   // Define columns for the DataTable
   const columns = [
     {
-      name: "NAME",
-      selector: "studentName",
+      name: "TIME",
+      selector: "time",
       sortable: true,
     },
     {
-      name: "ID",
-      selector: "studentId",
+      name: "DAY",
+      selector: "day",
     },
     {
-      name: "ADDRESS",
-      selector: "studentAddr",
+      name: "SUBJECT ID",
+      selector: "subjectInfo.subjectId",
     },
     {
-      name: "AGE",
-      selector: "studentAge",
+      name: "INSTRUCTOR CODE",
+      selector: "instructorInfo.instructorName",
     },
     {
-      name: "YEAR",
-      selector: "yearLevel",
-    },
-    {
-      name: "STUDENT CODE",
+      name: "SCHEDULE CODE",
       selector: "_id",
       cell: (row) => (
         <span
@@ -93,45 +91,42 @@ function Student() {
     },
   };
   return (
-    <>
-      <h2> STUDENT</h2>
-      <div className="table-container">
-        <div className="search-create-container">
-          <div className="search-bar-wrapper">
-            <input
-              className="search-bar"
-              type="text"
-              placeholder="Search Name name or ID"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-          </div>
-        </div>
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <DataTable
-            columns={columns}
-            data={
-              Array.isArray(student)
-                ? student.filter((item) => {
-                    const studentMatch = item.studentName
-                      ?.toLowerCase()
-                      .includes(searchText.toLowerCase());
-                    const studentIdMatch = item.studentId
-                      ?.toLowerCase()
-                      .includes(searchText.toLowerCase());
-                    return studentMatch || studentIdMatch;
-                  })
-                : []
-            }
-            pagination
-            customStyles={customStyles}
+    <div className="table-container">
+      <div className="search-create-container">
+        <div className="search-bar-wrapper">
+          <input
+            className="search-bar"
+            type="text"
+            placeholder="Search Subject ID or Day"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
           />
-        )}
+        </div>
       </div>
-    </>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <DataTable
+          columns={columns}
+          data={
+            Array.isArray(schedule)
+              ? schedule.filter((item) => {
+                  const instructorMatch = item.day
+                    ?.toLowerCase()
+                    .includes(searchText.toLowerCase());
+                  const subjectIdMatch = item.subjectInfo?.subjectId
+                    ?.toLowerCase()
+                    .includes(searchText.toLowerCase());
+                  return instructorMatch || subjectIdMatch;
+                })
+              : []
+          }
+          pagination
+          customStyles={customStyles}
+        />
+      )}
+    </div>
   );
 }
 
-export default Student;
+export default Course;

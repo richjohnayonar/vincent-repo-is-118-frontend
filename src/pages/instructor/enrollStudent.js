@@ -1,21 +1,17 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { Alert } from "react-bootstrap";
-import Course from "../../components/course";
-import Instructor from "../../components/Instructor";
 import * as FaIcons from "react-icons/fa";
+import Schedule from "../../components/schedule";
+import Student from "../../components/student";
 
-function EnrollStudent() {
+function EnrollStudent({ userId }) {
   // State to manage form fields
-  const [subjectId, setSubjectId] = useState("");
-  const [subDescription, setSubdescription] = useState("");
-  const [course, setCourse] = useState("");
-  const [instructor, setInstructor] = useState("");
-  const navigate = useNavigate();
+  const [student, setStudent] = useState("");
+  const [schedule, setSchedule] = useState("");
   const [error, setError] = useState(null);
   const [isloading, setIsLoading] = useState(null);
-
+  console.log(userId);
   // Ref for the form container
   const formRef = useRef(null);
 
@@ -24,14 +20,12 @@ function EnrollStudent() {
     e.preventDefault();
     try {
       setIsLoading(true);
-      await axios.post("http://localhost:8000/api/subject", {
-        subjectId: subjectId,
-        subjectDescription: subDescription,
-        course: course,
-        instructor: instructor,
+      await axios.post("http://localhost:8000/api/student-schedule", {
+        student: student,
+        schedule: schedule,
       });
       setIsLoading(false);
-      navigate("/users-account");
+      window.location.reload(); // Reload the page after successful deletion
     } catch (error) {
       console.log(error);
       setError("Error please try again.");
@@ -52,77 +46,59 @@ function EnrollStudent() {
       >
         <p style={{ textAlign: "left", marginTop: "30px", marginLeft: "20px" }}>
           <button className="assignInstructorButton" onClick={scrollToForm}>
-            Assign Instructor
+            ENROLL STUDENT
             <FaIcons.FaPlus style={{ marginLeft: "8px" }} />
           </button>
         </p>
-        <h2 style={{ marginTop: "50px" }}>INSTRUCTOR</h2>
-        <Instructor />
+        <Student />
       </div>
       <div
         style={{ background: "white", padding: "20px", marginBottom: "20px" }}
       >
-        <h2 style={{ marginTop: "10px" }}>COURSE</h2>
-        <Course />
+        <h2 style={{ marginTop: "50px" }}>YOUR SUBJECT SCHEDULE</h2>
+        <Schedule userId={userId} />
       </div>
+
       <div
         style={{
           background: "white",
-          paddingBottom: "100px",
+          paddingBottom: "200px",
           paddingTop: "20px",
         }}
       >
         <div ref={formRef} className="form-container">
-          <h2>Assign Subject Instructor</h2>
+          <h2>Enroll A Student</h2>
           <form onSubmit={handleSubmit}>
             {error && <Alert variant="danger">{error}</Alert>}
             <div className="form-group">
-              <label htmlFor="email">Subject & Section</label>
+              <label htmlFor="email">student code</label>
               <input
                 type="text"
-                id="subjectid"
-                name="subjectid"
-                placeholder="Eg. ITE 110 - EG1"
-                value={subjectId}
-                onChange={(e) => setSubjectId(e.target.value)}
+                id="student"
+                name="student"
+                placeholder="Enter a student code."
+                value={student}
+                onChange={(e) => setStudent(e.target.value)}
               />
             </div>
             <div className="form-group">
-              <label htmlFor="password">Subject Description</label>
+              <label htmlFor="password">Schedule Code</label>
               <input
                 type="text"
-                id="subDescription"
-                name="subDescription"
-                placeholder="Subject Description"
-                value={subDescription}
-                onChange={(e) => setSubdescription(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Course Code</label>
-              <input
-                type="text"
-                id="course"
-                name="course"
-                placeholder="Course"
-                value={course}
-                onChange={(e) => setCourse(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Instructor Code</label>
-              <input
-                type="text"
-                id="instructor"
-                name="instructor"
-                placeholder="instructor"
-                value={instructor}
-                onChange={(e) => setInstructor(e.target.value)}
+                id="schedule"
+                name="schedule"
+                placeholder="Enter Schedule Code"
+                value={schedule}
+                onChange={(e) => setSchedule(e.target.value)}
               />
             </div>
             {!isloading && (
-              <button className="create-account-sb-button" type="submit">
-                Create Account
+              <button
+                style={{ marginBottom: "40px", marginTop: "50px" }}
+                className="create-account-sb-button"
+                type="submit"
+              >
+                Confirm
               </button>
             )}
           </form>
