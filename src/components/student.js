@@ -1,31 +1,27 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-import "../Page.css";
-import { Link } from "react-router-dom";
 
-function AssignedSubject({ userId }) {
-  const [subject, setSubject] = useState([]);
+function Student() {
+  const [student, setStudent] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(true);
   const [maxLength, setMaxLength] = useState(200); // Default maxLength
 
   useEffect(() => {
-    const getSubject = async () => {
+    const getCourse = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8000/api/subject/${userId}`
-        );
-        setSubject(Array.isArray(response.data) ? response.data : []);
+        const response = await axios.get("http://localhost:8000/api/student");
+        setStudent(response.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching schedule:", error);
         setLoading(false);
-        setSubject([]);
+        setStudent([]);
       }
     };
-    getSubject();
-  }, [userId]);
+    getCourse();
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -53,38 +49,37 @@ function AssignedSubject({ userId }) {
   // Define columns for the DataTable
   const columns = [
     {
-      name: "SUBJECT ID",
-      selector: "subjectId",
+      name: "NAME",
+      selector: "studentName",
       sortable: true,
     },
     {
-      name: "SUBJECT DESCRIPTION",
-      selector: "subjectDescription",
+      name: "ID",
+      selector: "studentId",
+    },
+    {
+      name: "ADDRESS",
+      selector: "studentAddr",
+    },
+    {
+      name: "AGE",
+      selector: "studentAge",
+    },
+    {
+      name: "YEAR",
+      selector: "yearLevel",
+    },
+    {
+      name: "STUDENT CODE",
+      selector: "_id",
       cell: (row) => (
-        <span title={row.subjectDescription}>
-          {truncateDescription(row.subjectDescription)}
+        <span
+          title={row._id} // Optional chaining to handle potential undefined
+          className="Studen-code-cell"
+        >
+          {truncateDescription(row._id)}
+          {/* Optional chaining */}
         </span>
-      ),
-      style: {
-        textAlign: "left",
-      },
-      headerStyle: {
-        textAlign: "left",
-      },
-    },
-    {
-      name: "COURSE",
-      selector: "courseInfo.courseAv",
-      sortable: true,
-    },
-    {
-      name: "More Details",
-      cell: (row) => (
-        <div>
-          <Link to={`/subject-detail/${row._id}`}>
-            <h3 className="view-more">View more details</h3>
-          </Link>
-        </div>
       ),
     },
   ];
@@ -97,17 +92,16 @@ function AssignedSubject({ userId }) {
       },
     },
   };
-
   return (
-    <div style={{ background: "white", paddingBottom: "20px" }}>
+    <>
+      <h2> STUDENT</h2>
       <div className="table-container">
-        <h2 style={{ marginTop: "10px", padding: "10px" }}>Assined Subjects</h2>
         <div className="search-create-container">
           <div className="search-bar-wrapper">
             <input
               className="search-bar"
               type="text"
-              placeholder="Search by Subject ID or Day"
+              placeholder="Search by courseAv or Department"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
@@ -119,15 +113,15 @@ function AssignedSubject({ userId }) {
           <DataTable
             columns={columns}
             data={
-              Array.isArray(subject)
-                ? subject.filter((item) => {
-                    const subjectIdMatch = item.subjectInfo?.subjectId
+              Array.isArray(student)
+                ? student.filter((item) => {
+                    const courseAVMatch = item.studentName
                       ?.toLowerCase()
                       .includes(searchText.toLowerCase());
-                    const course = item.courseInfo.courseAv
+                    const department = item.studentId
                       ?.toLowerCase()
                       .includes(searchText.toLowerCase());
-                    return subjectIdMatch || course;
+                    return courseAVMatch || department;
                   })
                 : []
             }
@@ -136,8 +130,8 @@ function AssignedSubject({ userId }) {
           />
         )}
       </div>
-    </div>
+    </>
   );
 }
 
-export default AssignedSubject;
+export default Student;

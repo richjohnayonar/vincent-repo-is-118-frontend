@@ -11,6 +11,9 @@ import CreateUsersAccount from "./pages/Editor/createAccount";
 import UpdateUser from "./pages/Editor/updateUser";
 import Subject from "./pages/instructor/subjects";
 import SubjectDetail from "./pages/instructor/subjectDetail";
+import AssignInstructor from "./pages/Editor/AssignInstructor";
+import Footer from "./components/footer";
+import EnrollStudent from "./pages/instructor/enrollStudent";
 
 function Main({ handleLogout, userRole, userId }) {
   return (
@@ -45,6 +48,10 @@ function Main({ handleLogout, userRole, userId }) {
               path="/subject-detail/:id"
               element={<SubjectDetail userId={userId} />}
             />
+            <Route
+              path="/enroll-student"
+              element={<EnrollStudent userId={userId} />}
+            />
           </>
         ) : null}
         {userRole === "editor" ? (
@@ -55,10 +62,12 @@ function Main({ handleLogout, userRole, userId }) {
               path="/create-user-account"
               element={<CreateUsersAccount />}
             />
+            <Route path="/assign-instructor" element={<AssignInstructor />} />
             {/*<Route path="/other-user-page" element={<OtherUserPage />}/> */}
           </>
         ) : null}
       </Routes>
+      <Footer />
     </>
   );
 }

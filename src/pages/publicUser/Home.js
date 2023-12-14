@@ -4,20 +4,19 @@ import axios from "axios";
 function Home({ userId }) {
   const [userData, setUserData] = useState(null);
 
-  const getUser = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8000/api/student/${userId}`
-      );
-      setUserData(response.data); // Save the fetched data to state
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/api/student/${userId}`
+        );
+        setUserData(response.data); // Save the fetched data to state
+      } catch (error) {
+        console.log(error);
+      }
+    };
     getUser();
-  }, []);
+  }, [userId]);
 
   // Once data is fetched and stored in 'userData', display it in your component
   return (

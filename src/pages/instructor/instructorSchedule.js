@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-import "../Editor/Editor.css";
+import "../Page.css";
 
 function InstructorSchedule({ userId }) {
   const [schedule, setSchedule] = useState([]);
@@ -75,7 +75,7 @@ function InstructorSchedule({ userId }) {
           title={row.subjectInfo?.subjectDescription} // Optional chaining to handle potential undefined
           className="subject-description-cell"
         >
-          {truncateDescription(row.subjectInfo?.subjectDescription)}{" "}
+          {truncateDescription(row.subjectInfo?.subjectDescription)}
           {/* Optional chaining */}
         </span>
       ),
@@ -91,47 +91,52 @@ function InstructorSchedule({ userId }) {
   const customStyles = {
     headCells: {
       style: {
-        backgroundColor: "green",
-        color: "#fff",
+        backgroundColor: "#88f0b3",
+        color: "rgb(33, 37, 33)",
       },
     },
   };
 
   return (
-    <div className="table-container">
-      <div className="search-create-container">
-        <div className="search-bar-wrapper">
-          <input
-            className="search-bar"
-            type="text"
-            placeholder="Search by Subject ID or Day"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
+    <div style={{ background: "white", marginBottom: "20px" }}>
+      <div className="table-container">
+        <h2 style={{ marginTop: "5px", padding: "30px" }}>
+          Instructor Schedule
+        </h2>
+        <div className="search-create-container">
+          <div className="search-bar-wrapper">
+            <input
+              className="search-bar"
+              type="text"
+              placeholder="Search by Subject ID or Day"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+          </div>
         </div>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <DataTable
+            columns={columns}
+            data={
+              Array.isArray(schedule)
+                ? schedule.filter((item) => {
+                    const subjectIdMatch = item.subjectInfo?.subjectId
+                      ?.toLowerCase()
+                      .includes(searchText.toLowerCase());
+                    const dayMatch = item.day
+                      ?.toLowerCase()
+                      .includes(searchText.toLowerCase());
+                    return subjectIdMatch || dayMatch;
+                  })
+                : []
+            }
+            pagination
+            customStyles={customStyles}
+          />
+        )}
       </div>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <DataTable
-          columns={columns}
-          data={
-            Array.isArray(schedule)
-              ? schedule.filter((item) => {
-                  const subjectIdMatch = item.subjectInfo?.subjectId
-                    ?.toLowerCase()
-                    .includes(searchText.toLowerCase());
-                  const dayMatch = item.day
-                    ?.toLowerCase()
-                    .includes(searchText.toLowerCase());
-                  return subjectIdMatch || dayMatch;
-                })
-              : []
-          }
-          pagination
-          customStyles={customStyles}
-        />
-      )}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-import "../Editor/Editor.css";
+import "../Page.css";
 // import * as FaIcons from "react-icons/fa";
 // import { Link, Navigate } from "react-router-dom";
 

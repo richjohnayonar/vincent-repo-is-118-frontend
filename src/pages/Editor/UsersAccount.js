@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-import "./Editor.css";
+import "../Page.css";
 import * as FaIcons from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -68,37 +68,49 @@ function UsersAccount() {
   const customStyles = {
     headCells: {
       style: {
-        backgroundColor: "green",
-        color: "#fff",
+        backgroundColor: "#88f0b3",
+        color: "rgb(33, 37, 33)",
       },
     },
   };
 
   return (
-    <div className="table-container">
-      <div className="search-create-container">
-        <div className="search-bar-wrapper">
-          <input
-            className="search-bar"
-            type="text"
-            placeholder="Search by email"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
+    <>
+      <div
+        style={{
+          background: "white",
+          paddingBottom: "60px",
+          marginBottom: "20px",
+        }}
+      >
+        <h2 style={{ marginTop: "20px", paddingTop: "10px" }}>USERS ACCOUNT</h2>
+        <div className="table-container">
+          <div className="search-create-container">
+            <div className="search-bar-wrapper">
+              <input
+                className="search-bar"
+                type="text"
+                placeholder="Search by email"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+            </div>
+            <Link to="/create-user-account" className="create-user-btn">
+              <span className="text">Create Student Account</span>
+              <FaIcons.FaPlus className="plus-icon" />
+            </Link>
+          </div>
+          <DataTable
+            columns={columns}
+            data={user.filter((item) =>
+              item.email.toLowerCase().includes(searchText.toLowerCase())
+            )}
+            pagination
+            customStyles={customStyles}
           />
         </div>
-        <Link to="/create-user-account">
-          <button className="create-user-btn">Create User</button>
-        </Link>
       </div>
-      <DataTable
-        columns={columns}
-        data={user.filter((item) =>
-          item.email.toLowerCase().includes(searchText.toLowerCase())
-        )}
-        pagination
-        customStyles={customStyles}
-      />
-    </div>
+    </>
   );
 }
 

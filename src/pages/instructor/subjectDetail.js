@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-import "../Editor/Editor.css";
+import "../Page.css";
 import { useParams } from "react-router-dom";
 
 function SubjectDetail() {
@@ -71,15 +71,21 @@ function SubjectDetail() {
   const customStyles = {
     headCells: {
       style: {
-        backgroundColor: "green",
-        color: "#fff",
+        backgroundColor: "#88f0b3",
+        color: "rgb(33, 37, 33)",
       },
     },
   };
 
   return (
     <>
-      <div>
+      <div
+        style={{
+          background: "white",
+          paddingBottom: "100px",
+          paddingTop: "20px",
+        }}
+      >
         <h2>
           <span>{subject.subjectId}</span> - {subject.subjectDescription}
         </h2>

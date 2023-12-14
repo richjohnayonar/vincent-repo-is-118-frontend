@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Alert } from "react-bootstrap";
+import Student from "../../components/student";
 
 function CreateAccount() {
   // State to manage form fields
@@ -47,65 +48,82 @@ function CreateAccount() {
   };
 
   return (
-    <div className="form-container">
-      <h2>CREATE USER ACCOUNT</h2>
-      <form onSubmit={handleSubmit}>
-        {error && <Alert variant="danger">{error}</Alert>}
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+    <>
+      <div
+        style={{
+          background: "white",
+          paddingTop: "50px",
+        }}
+      >
+        {!isloading && <Student />}
+      </div>
+
+      <div
+        style={{
+          background: "white",
+          paddingBottom: "100px",
+          paddingTop: "20px",
+        }}
+      >
+        <div className="form-container">
+          <h2>CREATE STUDENT ACCOUNT</h2>
+          <form onSubmit={handleSubmit}>
+            {error && <Alert variant="danger">{error}</Alert>}
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="role">Role</label>
+              <select
+                id="role"
+                name="role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+              >
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+                <option value="editor">Editor</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Student Code</label>
+              <input
+                type="text"
+                id="id"
+                name="id"
+                placeholder="Enter your Student id"
+                value={id}
+                onChange={(e) => setId(e.target.value)}
+              />
+            </div>
+            {!isloading && (
+              <button className="create-account-sb-button" type="submit">
+                Create Account
+              </button>
+            )}
+          </form>
         </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="role">Role</label>
-          <select
-            id="role"
-            name="role"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-          >
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-            <option value="editor">Editor</option>
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">
-            Student ID generated in database( _id )
-          </label>
-          <input
-            type="text"
-            id="id"
-            name="id"
-            placeholder="Enter your Student id"
-            value={id}
-            onChange={(e) => setId(e.target.value)}
-          />
-        </div>
-        {!isloading && (
-          <button className="create-account-sb-button" type="submit">
-            Create Account
-          </button>
-        )}
-      </form>
-    </div>
+      </div>
+    </>
   );
 }
 
