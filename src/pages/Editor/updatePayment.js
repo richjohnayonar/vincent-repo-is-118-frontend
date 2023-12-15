@@ -56,7 +56,7 @@ function UpdatePayment() {
 
   return (
     <div className="form-container">
-      <h2>UPDATE USER</h2>
+      <h2>UPDATE PAYMENT</h2>
       <form onSubmit={handleSubmit}>
         {error && <Alert variant="danger">{error}</Alert>}
         <div className="form-group">
