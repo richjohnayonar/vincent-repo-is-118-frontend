@@ -4,17 +4,21 @@ import DataTable from "react-data-table-component";
 import "../Page.css";
 import * as FaIcons from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Loader from "../../components/loader";
 
 function PaymentStatus() {
   const [payment, setPayment] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const getPayment = async () => {
     try {
       const response = await axios.get("http://localhost:8000/api/payment");
       setPayment(response.data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   };
 
@@ -105,16 +109,20 @@ function PaymentStatus() {
               />
             </div>
           </div>
-          <DataTable
-            columns={columns}
-            data={payment.filter((item) =>
-              item.student.studentId
-                .toLowerCase()
-                .includes(searchText.toLowerCase())
-            )}
-            pagination
-            customStyles={customStyles}
-          />
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <DataTable
+              columns={columns}
+              data={payment.filter((item) =>
+                item.student.studentId
+                  .toLowerCase()
+                  .includes(searchText.toLowerCase())
+              )}
+              pagination
+              customStyles={customStyles}
+            />
+          )}
         </div>
       </div>
     </>

@@ -3,6 +3,7 @@ import axios from "axios";
 import DataTable from "react-data-table-component";
 import "../Page.css";
 import { Link } from "react-router-dom";
+import Loader from "../../components/loader";
 
 function AssignedSubject({ userId }) {
   const [subject, setSubject] = useState([]);
@@ -114,7 +115,7 @@ function AssignedSubject({ userId }) {
           </div>
         </div>
         {loading ? (
-          <p>Loading...</p>
+          <Loader />
         ) : (
           <DataTable
             columns={columns}

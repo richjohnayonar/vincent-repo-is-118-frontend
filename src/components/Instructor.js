@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
+import Loader from "./loader";
 
 function Instructor() {
   const [instructor, setInstructor] = useState([]);
@@ -73,7 +74,7 @@ function Instructor() {
         </div>
       </div>
       {loading ? (
-        <p>Loading...</p>
+        <Loader />
       ) : (
         <DataTable
           columns={columns}

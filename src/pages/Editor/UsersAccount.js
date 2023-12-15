@@ -4,17 +4,21 @@ import DataTable from "react-data-table-component";
 import "../Page.css";
 import * as FaIcons from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Loader from "../../components/loader";
 
 function UsersAccount() {
   const [user, setUser] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const getUser = async () => {
     try {
       const response = await axios.get("http://localhost:8000/api/user");
       setUser(response.data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   };
 
@@ -100,14 +104,18 @@ function UsersAccount() {
               <FaIcons.FaPlus className="plus-icon" />
             </Link>
           </div>
-          <DataTable
-            columns={columns}
-            data={user.filter((item) =>
-              item.email.toLowerCase().includes(searchText.toLowerCase())
-            )}
-            pagination
-            customStyles={customStyles}
-          />
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <DataTable
+              columns={columns}
+              data={user.filter((item) =>
+                item.email.toLowerCase().includes(searchText.toLowerCase())
+              )}
+              pagination
+              customStyles={customStyles}
+            />
+          )}
         </div>
       </div>
     </>

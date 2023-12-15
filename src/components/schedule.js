@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
+import Loader from "./loader";
 
 function Course({ userId }) {
   const [schedule, setSchedule] = useState([]);
@@ -104,7 +105,7 @@ function Course({ userId }) {
         </div>
       </div>
       {loading ? (
-        <p>Loading...</p>
+        <Loader />
       ) : (
         <DataTable
           columns={columns}

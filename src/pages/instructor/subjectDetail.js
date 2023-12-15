@@ -3,6 +3,7 @@ import axios from "axios";
 import DataTable from "react-data-table-component";
 import "../Page.css";
 import { useParams } from "react-router-dom";
+import Loader from "../../components/loader";
 
 function SubjectDetail() {
   const { id } = useParams();
@@ -105,7 +106,7 @@ function SubjectDetail() {
             </div>
           </div>
           {loading ? (
-            <p>Loading...</p>
+            <Loader />
           ) : (
             <DataTable
               columns={columns}
