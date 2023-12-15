@@ -78,6 +78,7 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  margin-bottom: 28px;
 }
 
 .create-user-btn:hover {
@@ -94,16 +95,19 @@
 
 @media (max-width: 600px) {
   .create-user-btn {
-    padding-right: 35px; /* Add space for the plus icon */
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-top: 10px;
+    margin-bottom: 30px;
   }
-
   .create-user-btn .text {
     display: none; /* Hide the text on smaller screens */
   }
 
   .create-user-btn .plus-icon {
-    display: inline-block; /* Show the plus icon on smaller screens */
-    margin-left: 8px; /* Adjust margin as needed */
+    display: inline-block;
+    margin: auto;
+    font-size: 25px;
   }
 }
 /* @media screen and (max-width: 430px) {

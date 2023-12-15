@@ -52,7 +52,7 @@ export default function Login({ handleLogin, isAuthenticated }) {
           borderRadius: "15px",
         }}
       >
-        <h2 style={{ marginBottom: "30px" }}>LOGIN</h2>
+        <h2 style={{ marginBottom: "30px" }}>Sign in to your Account</h2>
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={(e) => handleSubmit(e)}>
           <Form.Group controlId="formBasicEmail">
