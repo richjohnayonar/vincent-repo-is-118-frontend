@@ -12,7 +12,7 @@ function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const getVehicles = async () => {
+    const getSubject = async () => {
       try {
         let url = `http://localhost:8000/api/subjectPage?page=${currentPage}&limit=${subjectPerPage}`;
 
@@ -27,7 +27,7 @@ function Home() {
       }
     };
 
-    getVehicles();
+    getSubject();
   }, [currentPage, subjectPerPage]);
 
   const nextPage = () => {

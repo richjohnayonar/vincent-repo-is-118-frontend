@@ -105,7 +105,7 @@ function UsersAccount() {
               />
             </div>
             <Link to="/create-user-account" className="create-user-btn">
-              <span className="text">Create Student Account</span>
+              <span className="text">Create User Account</span>
               <FaIcons.FaPlus className="plus-icon" />
             </Link>
           </div>

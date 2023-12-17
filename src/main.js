@@ -17,6 +17,8 @@ import AssignScheduleToInstructor from "./pages/Editor/assignScheduleToInstructo
 import Billing from "./pages/Editor/Billing";
 import PaymentStatus from "./pages/Editor/PaymentStatus";
 import UpdatePayment from "./pages/Editor/updatePayment";
+import SpecificSubject from "./pages/publicUser/specificSubject";
+import StudentPaymentStatus from "./pages/publicUser/StudentPaymentStatus";
 
 function Main({ handleLogout, userRole, userId }) {
   return (
@@ -29,11 +31,22 @@ function Main({ handleLogout, userRole, userId }) {
         userRole === "editor" ? (
           <>
             <Route path={"/home"} element={<Home userId={userId} />} />
+            <Route
+              path="/subject-more-details/:id"
+              element={<SpecificSubject userId={userId} />}
+            />
           </>
         ) : null}
         {userRole === "user" && (
           <>
-            <Route path="/schedule" element={<StudentSched />} />
+            <Route
+              path="/schedule"
+              element={<StudentSched userId={userId} />}
+            />
+            <Route
+              path="/myPayment-status"
+              element={<StudentPaymentStatus userId={userId} />}
+            />
           </>
         )}
         {userRole === "admin" ? (

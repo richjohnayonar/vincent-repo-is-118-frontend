@@ -12,7 +12,14 @@ export const SidebarData = [
   {
     title: "Schedule",
     path: "/schedule",
-    icon: <FaIcons.FaUserAlt />,
+    icon: <FaIcons.FaCalendarDay />,
+    cName: "nav-text",
+    role: "user",
+  },
+  {
+    title: "My Payment Status",
+    path: "/myPayment-status",
+    icon: <FaIcons.FaMoneyCheckAlt />,
     cName: "nav-text",
     role: "user",
   },

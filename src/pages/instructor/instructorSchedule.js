@@ -101,9 +101,7 @@ function InstructorSchedule({ userId }) {
   return (
     <div style={{ background: "white", marginBottom: "20px" }}>
       <div className="table-container">
-        <h2 style={{ marginTop: "5px", padding: "30px" }}>
-          Instructor Schedule
-        </h2>
+        <h2 style={{ marginTop: "5px", padding: "30px" }}>My Schedule</h2>
         <div className="group">
           <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
             <g>
