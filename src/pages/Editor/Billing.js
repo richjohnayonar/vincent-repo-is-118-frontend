@@ -1,8 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Alert } from "react-bootstrap";
-import * as FaIcons from "react-icons/fa";
-import Student from "../../components/student";
 
 function Billing() {
   // State to manage form fields
@@ -12,9 +10,6 @@ function Billing() {
   const [status, setStatus] = useState("");
   const [error, setError] = useState(null);
   const [isloading, setIsLoading] = useState(null);
-
-  // Ref for the form container
-  const formRef = useRef(null);
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
@@ -36,38 +31,10 @@ function Billing() {
     }
   };
 
-  // Function to scroll to the form section
-  const scrollToForm = () => {
-    formRef.current.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <div>
       {!isloading && (
         <div>
-          {" "}
-          <div
-            style={{
-              background: "white",
-              padding: "20px",
-              marginTop: "20px",
-              marginBottom: "20px",
-            }}
-          >
-            <p
-              style={{
-                textAlign: "left",
-                marginTop: "30px",
-                marginLeft: "20px",
-              }}
-            >
-              <button className="assignInstructorButton" onClick={scrollToForm}>
-                Billing
-                <FaIcons.FaPlus style={{ marginLeft: "8px" }} />
-              </button>
-            </p>
-            <Student />
-          </div>
           <div>
             <div
               style={{
@@ -76,7 +43,7 @@ function Billing() {
                 paddingTop: "20px",
               }}
             >
-              <div ref={formRef} className="form-container">
+              <div className="form-container">
                 <h2>Billing</h2>
                 <form onSubmit={handleSubmit}>
                   {error && <Alert variant="danger">{error}</Alert>}

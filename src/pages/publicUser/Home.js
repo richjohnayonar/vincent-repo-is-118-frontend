@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import csu from "../images/csu night 2.png";
 import CourseCard from "../../components/courseCard";
 import Loader from "../../components/loader";
 
@@ -54,13 +53,8 @@ function Home() {
 
   return (
     <>
-      <div>
-        <img style={{ width: "100%", objectFit: "cover" }} src={csu} alt="" />
-      </div>
       <div
         style={{
-          background: "white",
-          paddingBottom: "20px",
           padding: "20px",
           marginTop: "20px",
         }}
@@ -99,7 +93,7 @@ function Home() {
                 padding: "8px 12px",
                 borderRadius: "4px",
                 border: "none",
-                backgroundColor: "#007c0d",
+                backgroundColor: "lightblue",
                 color: "#fff",
                 cursor: "pointer",
                 boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",

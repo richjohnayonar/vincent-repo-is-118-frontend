@@ -15,10 +15,10 @@ import Footer from "./components/footer";
 import EnrollStudent from "./pages/instructor/enrollStudent";
 import AssignScheduleToInstructor from "./pages/Editor/assignScheduleToInstructor";
 import Billing from "./pages/Editor/Billing";
-import PaymentStatus from "./pages/Editor/PaymentStatus";
 import UpdatePayment from "./pages/Editor/updatePayment";
-import SpecificSubject from "./pages/publicUser/specificSubject";
 import StudentPaymentStatus from "./pages/publicUser/StudentPaymentStatus";
+import MoreInformation from "./pages/Editor/MoreInformation";
+import StudentInfo from "./pages/instructor/StudentInfo";
 
 function Main({ handleLogout, userRole, userId }) {
   return (
@@ -31,10 +31,6 @@ function Main({ handleLogout, userRole, userId }) {
         userRole === "editor" ? (
           <>
             <Route path={"/home"} element={<Home userId={userId} />} />
-            <Route
-              path="/subject-more-details/:id"
-              element={<SpecificSubject userId={userId} />}
-            />
           </>
         ) : null}
         {userRole === "user" && (
@@ -67,6 +63,7 @@ function Main({ handleLogout, userRole, userId }) {
               path="/enroll-student"
               element={<EnrollStudent userId={userId} />}
             />
+            <Route path="/student-info" element={<StudentInfo />} />
           </>
         ) : null}
         {userRole === "editor" ? (
@@ -83,8 +80,8 @@ function Main({ handleLogout, userRole, userId }) {
               element={<AssignScheduleToInstructor />}
             />
             <Route path="/billing" element={<Billing />} />
-            <Route path="/payment-status" element={<PaymentStatus />} />
             <Route path="/update-payment/:id" element={<UpdatePayment />} />
+            <Route path="more-information" element={<MoreInformation />} />
           </>
         ) : null}
       </Routes>

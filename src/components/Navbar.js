@@ -46,14 +46,12 @@ function Navbar({ handleLogout, userRole }) {
             {navLinks.map((item, index) => (
               <li key={index} className={item.cName}>
                 <Link to={item.path}>
-                  {item.icon}
                   <span className="nav-span">{item.title}</span>
                 </Link>
               </li>
             ))}
             <li className="nav-text logout">
               <Link to="#" onClick={handleLogoutClick}>
-                <FaIcons.FaSignOutAlt />
                 <span className="nav-span">Sign Out</span>
               </Link>
             </li>

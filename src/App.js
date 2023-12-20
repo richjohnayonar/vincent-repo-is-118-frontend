@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Login from "./pages/login";
 import Main from "./main";
+import FirstPage from "./pages/FirstPage";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -40,6 +41,7 @@ function App() {
     <>
       <Router>
         <Routes>
+          <Route path="/" element={<FirstPage />}></Route>
           <Route
             path="/login"
             element={

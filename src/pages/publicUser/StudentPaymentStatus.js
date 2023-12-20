@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
 import "../Page.css";
-// import * as FaIcons from "react-icons/fa";
-// import { Link, Navigate } from "react-router-dom";
 import Loader from "../../components/loader";
 
 function StudentPaymentStatus({ userId }) {
@@ -50,35 +48,30 @@ function StudentPaymentStatus({ userId }) {
   const customStyles = {
     headCells: {
       style: {
-        backgroundColor: "#88f0b3",
+        backgroundColor: "rgb(247, 125, 50)",
         color: "rgb(33, 37, 33)",
       },
     },
   };
 
   return (
-    <div
-      style={{
-        background: "white",
-        marginBottom: "20px",
-        marginTop: "20px",
-        paddingBottom: "10px",
-      }}
-    >
-      <div>
-        <h2 style={{ marginTop: "30px", padding: "50px" }}>MY BALANCE</h2>
-      </div>
-      <div>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <DataTable
-            columns={columns}
-            data={paymentStatus}
-            pagination
-            customStyles={customStyles}
-          />
-        )}
+    <div>
+      <div className="table-container">
+        <div>
+          <h2 style={{ marginTop: "30px", padding: "10px" }}>MY BALANCE</h2>
+        </div>
+        <div>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <DataTable
+              columns={columns}
+              data={paymentStatus}
+              pagination
+              customStyles={customStyles}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

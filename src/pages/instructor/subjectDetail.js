@@ -9,7 +9,6 @@ function SubjectDetail() {
   const { id } = useParams();
   const [subject, setSubject] = useState([]);
   const [student, setStudent] = useState([]);
-  const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(true);
   //   const [maxLength, setMaxLength] = useState(200);
 
@@ -72,7 +71,7 @@ function SubjectDetail() {
   const customStyles = {
     headCells: {
       style: {
-        backgroundColor: "#88f0b3",
+        backgroundColor: "rgb(247, 125, 50)",
         color: "rgb(33, 37, 33)",
       },
     },
@@ -82,9 +81,7 @@ function SubjectDetail() {
     <>
       <div
         style={{
-          background: "white",
           paddingBottom: "100px",
-          paddingTop: "20px",
         }}
       >
         <h2>
@@ -94,35 +91,12 @@ function SubjectDetail() {
           <h2>Enrolled Student</h2>
         </div>
         <div className="table-container">
-          <div className="search-create-container">
-            <div className="search-bar-wrapper">
-              <input
-                className="search-bar"
-                type="text"
-                placeholder="Search by Name or ID"
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-            </div>
-          </div>
           {loading ? (
             <Loader />
           ) : (
             <DataTable
               columns={columns}
-              data={
-                Array.isArray(student)
-                  ? student.filter((item) => {
-                      const subjectIdMatch = item.studentInfo?.studentName
-                        ?.toLowerCase()
-                        .includes(searchText.toLowerCase());
-                      const dayMatch = item.studentInfo?.studentId
-                        ?.toLowerCase()
-                        .includes(searchText.toLowerCase());
-                      return subjectIdMatch || dayMatch;
-                    })
-                  : []
-              }
+              data={student}
               pagination
               customStyles={customStyles}
             />
